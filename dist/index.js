@@ -6130,7 +6130,7 @@ const github = __nccwpck_require__(546)
 async function main() {
     try {
         const token = core.getInput("github_token", { required: true })
-        const workflow = core.getInput("workflow", { required: true })
+        const workflow = core.getInput("workflow")
         const [owner, repo] = core.getInput("repo", { required: true }).split("/")
         const name = core.getInput("name")
         let workflowConclusion = core.getInput("workflow_conclusion")
@@ -6144,7 +6144,10 @@ async function main() {
 
         console.log("==> Conclusion:", workflowConclusion)
 
-
+        if(!workflow && !runID) {
+            throw new Error("neither workflow nor runID was specified")
+        }
+	    
         if (!runID) {
             for await (const runs of client.paginate.iterator(client.rest.actions.listWorkflowRuns, {
                 owner: owner,
