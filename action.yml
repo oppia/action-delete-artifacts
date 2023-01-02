@@ -11,7 +11,7 @@ inputs:
     default: ${{github.token}}
   workflow:
     description: Workflow name
-    required: true
+    required: false
   workflow_conclusion:
     description: |
       Wanted status or conclusion to search for in recent runs
@@ -25,6 +25,9 @@ inputs:
     default: ${{github.repository}}
   name:
     description: Artifact name (delete all artifacts in not specified)
+    required: false
+  run_id:
+    description: The ID of the job where the artifact resides
     required: false
 runs:
   using: node12
